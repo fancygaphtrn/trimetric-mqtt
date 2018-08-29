@@ -92,3 +92,4 @@ sensor:
 
 * [trimetric](http://www.bogartengineering.com/products/trimetrics.html) Trimetric meter
 * [Adafruit](https://www.adafruit.com/product/954) TTL to USB serial port.   Alternative to custome cable.
+![TTL to USB serial](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
