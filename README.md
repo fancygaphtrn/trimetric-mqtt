@@ -9,7 +9,7 @@ Read serial data from a Trimetic meter and publich to MQTT.  Using Rasperry pi.
 * Uses [paho.mqtt](https://pypi.org/project/paho-mqtt/#client)
 * Uses pyserial
 * A custom cable to interface the 5v Trimetric serial output to the 3.3V Raspberry pi GPIO
-![Custom cable schematic](https://github.com/fancygaphtrn/trimetric-mqtt/blob/master/TTL-to-USBserial.jpg)
+![Custom cable schematic](https://github.com/fancygaphtrn/trimetric-mqtt/blob/master/Custom%20cable.png)
 
 #### Home Assistant configuration.yaml Example
 
