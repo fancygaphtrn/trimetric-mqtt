@@ -91,5 +91,6 @@ sensor:
 ### References
 
 * [trimetric](http://www.bogartengineering.com/products/trimetrics.html) Trimetric meter
+![Trimetric TM2030-RV](https://github.com/fancygaphtrn/trimetric-mqtt/blob/master/TM-2030-RV-1-300x300.jpg)
 * [Adafruit](https://www.adafruit.com/product/954) TTL to USB serial port.   Alternative to custome cable.
 ![TTL to USB serial](https://github.com/fancygaphtrn/trimetric-mqtt/blob/master/TTL-to-USBserial.jpg)
