@@ -5,11 +5,12 @@ Read serial data from a Trimetic meter and publich to MQTT.  Using Rasperry pi.
 
 ### Getting started
 
-* I installed in a python virtualenv using Python 3
+* I installed in a python3 virtualenv using Python 3
 * Uses [paho.mqtt](https://pypi.org/project/paho-mqtt/#client)
 * Uses pyserial
 * A custom cable to interface the 5v Trimetric serial output to the 3.3V Raspberry pi GPIO
 ![Custom cable schematic](https://github.com/fancygaphtrn/trimetric-mqtt/blob/master/Custom%20cable.png)
+* Read TM2025-TM2030 Technical Information On Serial Data Output_0.pdf
 
 #### Home Assistant configuration.yaml Example
 
@@ -92,5 +93,5 @@ sensor:
 
 * [trimetric](http://www.bogartengineering.com/products/trimetrics.html) Trimetric meter
 ![Trimetric TM2030-RV](https://github.com/fancygaphtrn/trimetric-mqtt/blob/master/TM-2030-RV-1-300x300.jpg)
-* [Adafruit](https://www.adafruit.com/product/954) TTL to USB serial port.   Alternative to custome cable.
+* [Adafruit](https://www.adafruit.com/product/954) TTL to USB serial port.   May still require a RJ-11 breakout cable.
 ![TTL to USB serial](https://github.com/fancygaphtrn/trimetric-mqtt/blob/master/TTL-to-USBserial.jpg)
