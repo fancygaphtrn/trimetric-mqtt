@@ -3,6 +3,8 @@ Trimetric meter to MQTT
 
 Read serial data from a Trimetic meter and publich to MQTT.  Using Rasperry pi.
 
+I switched to using an ESP8266 and ESPhome.   I am including the files here.
+
 ### Getting started
 
 * I installed in a python3 virtualenv using Python 3
