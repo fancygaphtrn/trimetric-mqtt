@@ -1,4 +1,4 @@
-#!/srv/trimetric/bin/python3
+#!/usr/bin/python3
 import datetime, time
 import logging
 import json
@@ -21,7 +21,7 @@ log.info('Starting')
 
 MQTTHOST = "home.lan"
 MQTTPORT = 1883
-COUNTER = 5
+COUNTER = 1
 
 # The callback for when the client receives a CONNACK response from the server.
 def mqtt_on_connect(client, userdata, flags, rc):
@@ -66,17 +66,73 @@ previous =	{
   "AH": "0",
   "%": "0",
   "W": "0",
+  "FW": "0",
   "DSC": "0",
   "DSE": "0",
   "X": "0",
+  "W_IN": "0",
+  "W_OUT": "0",
+  "FW_IN": "0",
+  "FW_OUT": "0",
 }
+def reset_previous():
+  previous["V"] = 0
+  previous["FV"] = 0
+  previous["V2"] = 0
+  previous["A"] = 0
+  previous["FA"] = 0
+  previous["PW"] = 0
+  previous["AH"] = 0
+  previous["%"] = 0
+  previous["W"] = 0
+  previous["FW"] = 0
+  previous["DSC"] = 0
+  previous["DSE"] = 0
+  previous["X"] = 0
+  previous["W_IN"] = 0
+  previous["W_OUT"] = 0
+  previous["FW_IN"] = 0
+  previous["FW_OUT"] = 0
 
 def publish(topic,value):
 
     if topic == "%":
         value = '{:3.0f}'.format(float(value))
     elif topic == "W":
+        value = float(previous['V']) * float(previous['A'])
         value = '{:3.0f}'.format(float(value))
+    elif topic == "FW":
+        value = float(previous['FV']) * float(previous['FA'])
+        value = '{:3.0f}'.format(float(value))
+    elif topic == "W_IN":
+        if float(previous['W']) > 0:
+            value = float(previous['W'])
+            value = '{:3.0f}'.format(float(value))
+        else:
+            value = 0
+            value = '{:3.0f}'.format(float(value))
+    elif topic == "W_OUT":
+        if float(previous['W']) < 0:
+            value = abs(float(previous['W']))
+            value = '{:3.0f}'.format(float(value))
+        else:
+            value = 0
+            value = '{:3.0f}'.format(float(value))
+    elif topic == "FW_IN":
+        if float(previous['FW']) > 0:
+            value = float(previous['FW'])
+            value = '{:3.0f}'.format(float(value))
+        else:
+            value = 0
+            value = '{:3.0f}'.format(float(value))
+    elif topic == "FW_OUT":
+        if float(previous['FW']) < 0:
+            value = abs(float(previous['FW']))
+            value = '{:3.0f}'.format(float(value))
+        else:
+            value = 0
+            value = '{:3.0f}'.format(float(value))
+        
     elif topic == "PW":
         value = value
     elif topic == "X":
@@ -93,6 +149,7 @@ def publish(topic,value):
         previous[topic] = value
 
 counter = COUNTER
+previous_time = datetime.datetime.now()
         
 while 1:
     b = ser.read(125)
@@ -103,12 +160,18 @@ while 1:
 
     next = buffer.find(",V=",1)
     #print("next ", next)
+
+    if datetime.datetime.now() - previous_time >= datetime.timedelta(seconds=60):
+        log.info("Resetting previous values")
+        previous_time = datetime.datetime.now()
+        reset_previous()
+
     while next > -1:
 
         # A line should look like this V=25.3,FV=25.2,V2=00.0,A=00.5,FA=00.4,PW=2FF,AH=-0.08,%=100,W=12.1,DSC=3.84,DSE=3.84,PW=2FF
         # periodically you will get    V=25.3,FV=25.2,V2=00.0,A=00.5,FA=00.4,PW=2FF,AH=-0.08,%=100,W=12.1,DSC=3.84,DSE=3.84,PW=2FF,X=28A
 
-        line = buffer[1:next]
+        line = buffer[1:next] + ",FW=0,W_IN=0,W_OUT=0,FW_IN=0,FW_OUT=0"
         log.info("Line: %s" % (line))
         
         #skip messages as a way to rate limit
@@ -128,5 +191,8 @@ while 1:
         #print("buffer ", buffer)
 
 ser.close() # Only executes once the loop exits
+
+
+
 
 log.info('Ending')
