@@ -1,5 +1,5 @@
 # trimetric-mqtt
-Trimetric meter to MQTT
+Trimetric solar meter data logging
 
 Read serial data from a Trimetic meter and publich to MQTT.  Using Rasperry pi.
 
